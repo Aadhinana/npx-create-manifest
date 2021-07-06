@@ -357,8 +357,7 @@ const { bold } = require("kleur");
     fs.closeSync(fs.openSync(contentScriptFile, "w"));
     fs.closeSync(fs.openSync(serviceWorkerFile, "w"));
 
-    console.log(
-      bold(("Created manifest.json and other files!"))
-    );
+    console.log(bold("Created manifest.json and other files! 🎉"));
+    process.exit(0);
   })
   .catch((err) => console.log(err));
