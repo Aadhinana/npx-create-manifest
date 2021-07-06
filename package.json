@@ -1,0 +1,15 @@
+{
+  "name": "manifest-creator",
+  "version": "0.0.1",
+  "description": "Use npx create-manifest to create manifest.json file",
+  "main": "index.js",
+  "bin": {
+    "create-manifest": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prompts": "^2.4.1"
+  }
+}
