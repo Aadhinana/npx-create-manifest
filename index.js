@@ -5,6 +5,9 @@ const fs = require("fs");
 const path = require("path");
 const { bold } = require("kleur");
 
+// Check for -y passed in
+const args = process.argv.slice(2);
+
 (async () => {
   const questions = [
     {
@@ -321,6 +324,20 @@ const { bold } = require("kleur");
     },
   ];
 
+  if (args[0] === "-y") {
+    return Promise.resolve(
+      (result = {
+        name: "Chrome Extension",
+        version: "0.0.1",
+        description: "Describe your extension here",
+        deafult_title: "Seen on hover",
+        service_worker: "background.js",
+        content_script: "contentScript.js",
+        permissions: [],
+      })
+    );
+  }
+
   return await prompts(questions);
 })()
   .then((result) => {
@@ -330,6 +347,8 @@ const { bold } = require("kleur");
     const manifestFile = path.join(p, "manifest.json");
     const contentScriptFile = path.join(p, result.content_script);
     const serviceWorkerFile = path.join(p, result.service_worker);
+
+    const permissions = result.permissions.map((a) => `"${a}"`).join(",");
 
     const data = `{
   "manifest_version": 3,
@@ -349,7 +368,7 @@ const { bold } = require("kleur");
       "js": ["${result.content_script}"]
     }
   ],
-  "permissions": [${result.permissions.map((a) => `"${a}"`)}]
+  "permissions": [${permissions}]
 }`;
 
     fs.writeFileSync(manifestFile, data);
